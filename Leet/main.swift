@@ -8,42 +8,55 @@
 import Foundation
 
 
-func twoSumA(_ nums: [Int], _ target: Int) -> [Int] {
-    
-    for (index, lhs) in nums.enumerated() {
-        
-        for n in index+1...nums.count-1 {
-            if lhs + nums[n] == target {
-                return [index, n]
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public var val: Int
+ *     public var next: ListNode?
+ *     public init() { self.val = 0; self.next = nil; }
+ *     public init(_ val: Int) { self.val = val; self.next = nil; }
+ *     public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+ * }
+ */
+
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init() { self.val = 0; self.next = nil; }
+    public init(_ val: Int) { self.val = val; self.next = nil; }
+    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+}
+
+class Solution {
+    func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        if l1 == nil && l2 == nil {
+            return nil
+        } else if l1 == nil && l2 != nil {
+            return l2
+        } else if l1 != nil && l2 == nil {
+            return l1
+        } else {
+            
+            let newVal = l1!.val + l2!.val
+            
+            if newVal <= 9 {
+                
+                return ListNode(newVal, addTwoNumbers(l1?.next, l2?.next))
+                
+            } else {
+                let newNode = l1?.next
+                if newNode == nil {
+                    return ListNode(newVal - 10, addTwoNumbers(ListNode(1), l2?.next))
+                } else {
+                    newNode?.val = newNode!.val + 1
+                    
+                    return ListNode(newVal - 10,addTwoNumbers(newNode, (l2?.next == nil && newNode!.val > 9 ) ? ListNode(0) : l2?.next))
+                }
             }
         }
     }
-    return [0,0]
 }
-
-
 /*
- Runtime: 72 ms, faster than 51.84% of Swift online submissions for Two Sum.
- Memory Usage: 14.4 MB, less than 52.49% of Swift online submissions for Two Sum.
- */
-
-func twoSumB(_ nums: [Int], _ target: Int) -> [Int] {
-    
-    var numMap = [Int:Int]()
-    var rhs = 0
-    for (index, lhs) in nums.enumerated() {
-        rhs = target - lhs;
-        if  numMap[rhs] != nil {
-            return [numMap[rhs]!, index]
-        }
-        numMap[lhs] = index
-    }
-    return [0,0]
-}
-
-/*
- Runtime: 44 ms, faster than 99.73% of Swift online submissions for Two Sum.
- Memory Usage: 14.3 MB, less than 72.79% of Swift online submissions for Two Sum.
- */
-
-
+Runtime: 40 ms, faster than 87.57% of Swift online submissions for Add Two Numbers.
+Memory Usage: 14.1 MB, less than 26.34% of Swift online submissions for Add Two Numbers.
+*/
