@@ -57,6 +57,6 @@ class Solution {
     }
 }
 /*
-Runtime: 40 ms, faster than 87.57% of Swift online submissions for Add Two Numbers.
-Memory Usage: 14.1 MB, less than 26.34% of Swift online submissions for Add Two Numbers.
+ Runtime: 36 ms, faster than 97.26% of Swift online submissions for Add Two Numbers.
+ Memory Usage: 14.1 MB, less than 9.92% of Swift online submissions for Add Two Numbers.
 */
