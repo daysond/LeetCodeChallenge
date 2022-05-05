@@ -8,64 +8,22 @@
 import Foundation
 
 
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     public var val: Int
- *     public var next: ListNode?
- *     public init() { self.val = 0; self.next = nil; }
- *     public init(_ val: Int) { self.val = val; self.next = nil; }
- *     public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
- * }
- */
-
-public class ListNode {
-    public var val: Int
-    public var next: ListNode?
-    public init() { self.val = 0; self.next = nil; }
-    public init(_ val: Int) { self.val = val; self.next = nil; }
-    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
-}
-
 class Solution {
-    func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
-        if l1 == nil && l2 == nil {
-            return nil
-        } else if l1 == nil && l2 != nil {
-            return l2
-        } else if l1 != nil && l2 == nil {
-            return l1
-        } else {
-            
-            let newVal = l1!.val + l2!.val
-            
-            if newVal <= 9 {
-                
-                return ListNode(newVal, addTwoNumbers(l1?.next, l2?.next))
-                
-            } else {
-                let newNode = l1?.next
-                if newNode == nil {
-                    return ListNode(newVal - 10, addTwoNumbers(ListNode(1), l2?.next))
-                } else {
-                    newNode?.val = newNode!.val + 1
-                    
-                    return ListNode(newVal - 10,addTwoNumbers(newNode, (l2?.next == nil && newNode!.val > 9 ) ? ListNode(0) : l2?.next))
-                }
+    func lengthOfLongestSubstring(_ s: String) -> Int {
+        
+        var chars: Set<String.Element> = []
+        
+        var max = 0
+        
+        for char in s {
+            if chars.contains(char) {
+                max = chars.count > max ? chars.count : max;
+                chars.removeAll()
             }
+            chars.insert(char)
         }
+        
+        return max
     }
 }
-/*
- Runtime: 36 ms, faster than 97.26% of Swift online submissions for Add Two Numbers.
- Memory Usage: 14.1 MB, less than 9.92% of Swift online submissions for Add Two Numbers.
- 
- Runtime: 32 ms, faster than 99.66% of Swift online submissions for Add Two Numbers.
- Memory Usage: 14 MB, less than 26.34% of Swift online submissions for Add Two Numbers.
- 
- Runtime: 44 ms, faster than 67.27% of Swift online submissions for Add Two Numbers.
- Memory Usage: 13.8 MB, less than 85.75% of Swift online submissions for Add Two Numbers.
- 
- Runtime: 36 ms, faster than 97.26% of Swift online submissions for Add Two Numbers.
- Memory Usage: 14.1 MB, less than 26.34% of Swift online submissions for Add Two Numbers.
-*/
+
