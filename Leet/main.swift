@@ -7,7 +7,110 @@
 
 import Foundation
 
+class Solution4 {
+    func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
+        
 
+        let totalCount = nums1.count + nums2.count
+        let isEven = totalCount % 2 == 0
+        
+        var medianFound = false
+        var current = 0
+        var runningIndex = 0
+
+        var median = 0.0
+        
+        
+        if isEven {
+            var nums: [Int] = []
+
+            let medianIndex1 = totalCount/2 - 1
+            let medianIndex2 = totalCount/2
+
+            for num in nums2 where !medianFound {
+              
+                    while current < nums1.count && nums1[current] <= num && !medianFound{
+                        if runningIndex == medianIndex1 || runningIndex == medianIndex2 {
+                            nums.append(nums1[current])
+                        }
+                        current += 1
+                        runningIndex += 1
+                        if runningIndex > medianIndex2 {
+                            medianFound = true
+                        }
+                    }
+                if runningIndex == medianIndex1 || runningIndex == medianIndex2 {
+                    nums.append(num)
+                }
+
+                runningIndex += 1
+                
+                if runningIndex > medianIndex2 {
+                    medianFound = true
+                }
+            }
+            
+            for i in current..<nums1.count {
+                if runningIndex == medianIndex1 || runningIndex == medianIndex2 {
+                    nums.append(nums1[i])
+                }
+                runningIndex += 1
+                
+                if runningIndex > medianIndex2 {
+                    medianFound = true
+                }
+            }
+
+            median = nums.reduce(0.0) { Double($0) + Double($1) } / Double(nums.count)
+            
+            
+        } else {
+            
+            let medianIndex1 = (totalCount - 1) / 2
+            
+            for num in nums2 where !medianFound {
+              
+                    while current < nums1.count && nums1[current] <= num && !medianFound {
+                        if runningIndex == medianIndex1 {
+                            median = Double(nums1[current])
+                            medianFound = true
+                        }
+                        
+                        current += 1
+                        runningIndex += 1
+                    }
+                
+                if runningIndex == medianIndex1 {
+                    median = Double(num)
+                    medianFound = true
+                }
+
+                runningIndex += 1
+    
+            }
+            
+            for i in current..<nums1.count where !medianFound {
+                if runningIndex == medianIndex1 {
+                    median = Double(nums1[i])
+                    medianFound = true
+                }
+                runningIndex += 1
+            }
+        }
+
+        return median
+        
+    }
+}
+/*
+Runtime: 76 ms, faster than 76.05% of Swift online submissions for Median of Two Sorted Arrays.
+Memory Usage: 14.2 MB, less than 97.64% of Swift online submissions for Median of Two Sorted Arrays.
+                                                                    */
+
+let s = Solution4()
+
+let m = s.findMedianSortedArrays([], [2,3])
+print(m)
 
 class Solution3 {
     func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
@@ -119,7 +222,7 @@ Memory Usage: 14.2 MB, less than 90.54% of Swift online submissions for Median o
 
 
 //Online Solution
-class Solution4 {
+class Solution5 {
     func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
         let m = nums1.count
         let n = nums2.count
